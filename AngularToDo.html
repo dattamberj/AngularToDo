@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Todo</title>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<style>
+table,th,td {
+border: 1px solid grey;
+}
+td ,th {
+text-align: center;
+padding: 10px;
+}
+button 	{
+margin-bottom: 0px;
+}
+</style>
+<body ng-app="todo">
+<div ng-controller="ctrl">
+<center>
+<fieldset style="border: 2px solid grey; padding: 30px; margin: 30px 30%;">
+<legend><b>To-do List Application</b></legend>
+<form ng-submit="sub()">
+<input type="text" class="form-control" placeholder="Enter title" ng-model="title" required/></br>
+<input type="text" class="form-control" placeholder="Enter deadline"  ng-model="deadline" required/><br>
+<input class = "btn btn-info btn-sm" type="submit" value="Add to list"/></br></br>
+</form>
+</fieldset>
+<table class="table-hover" style="width: 80%; text-align: center; " cellpadding= "10px">
+<tr>
+<th>Title</th>
+<th>Deadline</th>
+<th>Status</th>
+<th>Done ?</th>
+</tr>
+<tr ng-repeat="todos in list">
+<td>{{todos.title}}</td>
+<td>{{todos.deadline}}</td>
+<td>{{todos.status}}</td>
+<td><button ng-show="check($index)"class = "btn btn-danger btn-xs" value="Done" ng-click="clicked($index, $parent)">Done</button><button ng-show="!check($index)"class = "btn btn-success btn-xs" value="Done" ng-click="clicked($index, $parent)">Done</button></td>
+</tr>
+</table>
+</center>
+</div>
+</body>
+<script>
+var app = angular.module('todo', []);
+app.controller('ctrl', function($scope) {
+    $scope.list = [];
+	$scope.sub = function(){
+		$scope.list.push({"title":$scope.title,"deadline":$scope.deadline,"status": "incomplete","bo": true });
+		
+		};
+	$scope.clicked = function($index) {
+		$scope.list[$index].status = "completed";
+		};
+	$scope.check=function($index) {
+		if( $scope.list[$index].status == "incomplete" ) return true;
+		else return false;
+		};
+	
+});
+</script>
